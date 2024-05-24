@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 // import styles from '../styles/Home.module.css'; // Ensure the path to your CSS file is correct
 
-export default function Home() {
+export default function Home({darkMode}) {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [showQuickResponses, setShowQuickResponses] = useState(true);
+
+    
 
     const handleInputChange = (e) => {
       setInput(e.target.value);
@@ -74,21 +76,31 @@ const formatText = (text) => {
 };
 const renderMessage = (msg) => {
   if (msg.sender === 'bot') {
-      return <p key={msg.id} className='text-left text-blue-500 m-5 p-5 rounded bg-white shadow-sm' dangerouslySetInnerHTML={{ __html: msg.text }}></p>;
+    return (
+        <div className='flex justify-between'>
+          <p key={msg.id} className='text-left text-blue-500 m-5 p-5 rounded bg-white shadow-sm w-1/2 rounded-e-3xl  ' dangerouslySetInnerHTML={{ __html: msg.text }}></p>
+          <div></div> {/* Empty div to push the message to the left */}
+        </div>
+      );
   } else {
-      return <p key={msg.id} className='text-right text-green-500 m-5 p-5 rounded bg-green-200 shadow-sm '>{msg.text}</p>;
-  }
+      return (
+        <div className='flex justify-between'>
+          <div></div> {/* Empty div to push the message to the right */}
+          <p key={msg.id} className='text-right text-green-500 m-5 p-5 rounded bg-green-200 shadow-sm w-auto rounded-s-3xl '>{msg.text}</p>
+        </div>
+      );
+    }
 };
 
     return (
-        <div className='w-40vw mx-auto p-20 shadow-md rounded-md bg-slate-300'>
-            <div className='border border-blue-500 rounded p-4 h-70v overflow-y-auto mb-4 shadow-md '>
+        <div className={`w-40vw mx-auto p-20 shadow-md rounded-md ${darkMode ? 'bg-slate-500' : ' bg-slate-300'}`}>
+            <div className={`border ${darkMode ? 'border-blue-200 bg-slate-400':'border-blue-500'} rounded p-4 h-70v overflow-y-auto mb-4 shadow-md `}>
                 {messages.map(msg => renderMessage(msg))}
                 {showQuickResponses && (
                     <div className='flex justify-between mt-4 p-5 m-2 rounded-md'>
-                        <button className='px-4 py-2 bg-blue-500 text-white border-none rounded-md cursor-pointer transition duration-300 hover:bg-blue-600 ' onClick={() => quickResponse('Hello!')}>Hello</button>
-                        <button className='px-4 py-2 bg-blue-500 text-white border-none rounded-md cursor-pointer transition duration-300 hover:bg-blue-600' onClick={() => quickResponse('Give a quick tip for a developer')}>Quick Tip</button>
-                        <button className='px-4 py-2 bg-blue-500 text-white border-none rounded-md cursor-pointer transition duration-300 hover:bg-blue-600' onClick={() => quickResponse('Tell me a joke!')}>Tell a Joke</button>
+                        <button className={`px-4 py-2 ${darkMode ? 'bg-blue-700' : 'bg-blue-500'} text-white border-none rounded-md cursor-pointer transition duration-300 hover:bg-blue-600`} onClick={() => quickResponse('Hello!')}>Hello</button>
+                        <button className={`px-4 py-2 ${darkMode ? 'bg-blue-700' : 'bg-blue-500'} text-white border-none rounded-md cursor-pointer transition duration-300 hover:bg-blue-600`} onClick={() => quickResponse('Give a quick tip for a developer')}>Quick Tip</button>
+                        <button className={`px-4 py-2 ${darkMode ? 'bg-blue-700' : 'bg-blue-500'} text-white border-none rounded-md cursor-pointer transition duration-300 hover:bg-blue-600`} onClick={() => quickResponse('Tell me a joke!')}>Tell a Joke</button>
                     </div>
                 )}
             </div>
@@ -98,10 +110,10 @@ const renderMessage = (msg) => {
                     value={input}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    className='flex-grow mr-4 p-4 border border-gray-300 rounded'
+                    className='flex-grow mr-4 p-4 border text-black border-gray-300 rounded'
                 />
-                <button onClick={() => sendMessage(input)} className='bg-blue-500 text-white border-none cursor-pointer rounded-2xl px-4 mx-1 animate-pulse'>Send</button>
-                <button onClick={saveMessagesToFile} className='bg-blue-500 text-white border-none cursor-pointer rounded-2xl px-4 mx-1 animate-pulse' >Save</button>
+                <button onClick={() => sendMessage(input)} className={`bg-blue-500 text-white border-none cursor-pointer rounded-2xl px-4 mx-1 animate-pulse ${darkMode ? 'bg-blue-700' : 'bg-blue-500'}`}>Send</button>
+                <button onClick={saveMessagesToFile} className={`bg-blue-500 text-white border-none cursor-pointer rounded-2xl px-4 mx-1 animate-pulse ${darkMode ? 'bg-blue-700' : 'bg-blue-500'}`}>Save</button>
             </div>
         </div>
     );
