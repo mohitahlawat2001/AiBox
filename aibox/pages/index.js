@@ -10,6 +10,18 @@ export default function Home() {
       setInput(e.target.value);
   };
 
+  const saveMessagesToFile = () => {
+    const formattedMessages = messages.map(message => `${message.sender}: ${message.text}`).join('\n');
+    const blob = new Blob([formattedMessages], {type: 'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'messages.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
         sendMessage(input);
@@ -88,7 +100,8 @@ const renderMessage = (msg) => {
                     onKeyDown={handleKeyDown}
                     className='flex-grow mr-4 p-4 border border-gray-300 rounded'
                 />
-                <button onClick={() => sendMessage(input)} className='bg-blue-500 text-white border-none cursor-pointer rounded-2xl px-4 animate-pulse'>Send</button>
+                <button onClick={() => sendMessage(input)} className='bg-blue-500 text-white border-none cursor-pointer rounded-2xl px-4 mx-1 animate-pulse'>Send</button>
+                <button onClick={saveMessagesToFile} className='bg-blue-500 text-white border-none cursor-pointer rounded-2xl px-4 mx-1 animate-pulse' >Save</button>
             </div>
         </div>
     );
