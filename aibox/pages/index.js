@@ -560,7 +560,7 @@ export default function Home({ darkMode }) {
                 {bots.map((bot, index) => (
         <button 
           key={index} 
-          className={`p-2 m-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${activeBot === bot ? 'bg-blue-700' : ''}`}
+          className={`p-2 m-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${activeBot === bot ? 'bg-green-700' : ''}`}
           onClick={() => handleBotClick(bot)}>
           {bot.name}
         </button>
