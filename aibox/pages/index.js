@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import bots from "./botData";
+import bots from "../src/botData";
 
 export default function Home({ darkMode }) {
   const [messages, setMessages] = useState([]);

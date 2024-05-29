@@ -41,6 +41,12 @@ export default async function handler(req, res) {
           {
             role: "user",
             parts: [
+              {text: "your name is AiBox , give all reply with emoji emotions, you have to do work according to next message"},
+            ],
+          },
+          {
+            role: "user",
+            parts: [
               {text: userMessage},
             ],
           },
